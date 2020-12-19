@@ -142,7 +142,8 @@ class NoiseSimulator:
 	def __init__(self, mu=35, sigma=7, 
 		min_=10, max_=80, 
 		day_range='afternoon',
-		coords=(0.0, 0.0)):
+		coords=(0.0, 0.0),
+		points=100):
 
 		self.mu = mu
 		self.sigma = sigma
@@ -150,10 +151,16 @@ class NoiseSimulator:
 		self.max_ = max_
 		self.day_range = day_range
 		self.coords = coords
+		self.points = points
 
-	def generate_for_point(self):
-		point = np.random.normal(value, self.sigma, 1)[0]
-		yield pont
+	def __len__(self):
+		return self.points
+
+	def __next__(self):
+
+		for i in range(self.points):
+			point = np.random.normal(self.mu, self.sigma, 1)[0]
+			yield point
 		
 
 def model_pv(specs=pv_specs, rad_coef=0.6):
